@@ -42,4 +42,10 @@ Route::get("/image-list",   [ImageController::class, 'list'])->name('image.list'
 Route::get("/image-show/{id}", [ImageController::class, 'show'])->name('image.show');
 Route::get("/image-edit-show/{id}", [ImageController::class, 'editShow'])->name('image.edit.show');
 Route::get("/image-update/{id}", [ImageController::class, 'updateImage'])->name('image.update');
+//Route::post("/image-update-insert", [ImageController::class, 'updateImageInsert'])->name('image.update.store'); // another way
+Route::post("/image-update-insert/{id}", [ImageController::class, 'updateImageInsert'])->name('image.update.store'); // right way
+
+Route::get('/image-delete/{id}', [ImageController::class, 'imageDelte'])->name('image.delete');
+
+
 require __DIR__.'/auth.php';

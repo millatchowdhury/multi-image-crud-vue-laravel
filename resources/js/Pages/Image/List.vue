@@ -40,7 +40,7 @@ const props = defineProps({
                        
                         <Link :href="route('image.show', service.id)">View</Link> |
                         <Link :href="route('image.edit.show', service.id)">Edit</Link> |
-                        <a href="">Delete</a>
+                        <Link :href="route('image.delete', service.id)">Delete</Link>
                     </td>
                 </tr>
             </tbody>

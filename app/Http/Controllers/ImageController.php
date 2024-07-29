@@ -127,6 +127,64 @@ class ImageController extends Controller
         
     }
 
+    public function updateImageInsert(Request $request, $id){
+        // $id = $request->id;
+        // dd($request->file('images')[0]);
+        // $request->all();
+        // $request->file('key')
+        // $request->file('key')[0]
+       
+       
+        // $id = $request->id; //another way
+        $id = $id; // ai line ta na likhleo hoto
+        if($request->hasFile('images')){
+            foreach($request->file('images') as $image){
+                $imageName = time()."-".uniqid().".".$image->getClientOriginalExtension();
+                $image->storeAs('images', $imageName, 'public');
+                Image::where('service_id', $id)->create([
+                    'image' => $imageName,
+                    'service_id' => $id
+                ]);
+            }
+        }
+        Service::where('id', $id)->update([
+            'name' => $request->name
+        ]);
+    
+    }
+    
+
+
+    public function imageDelte($id){
+        
+        $imageData = Image::where('service_id', $id)->get();
+        if(count($imageData) > 0){
+            foreach($imageData as $item){
+                if(File::exists("storage/images/".$item->image)){
+                    File::delete("storage/images/".$item->image);
+                }
+                $oneImage = Image::where('service_id', $id)->first();
+                $oneImage->delete();  //another way
+            }
+        }
+        $serviceData = Service::with('images')->find($id);
+        $serviceData->delete();
+
+        // $data = Service::with('images')->find($id);
+        // $data->delete();  // another way
+
+        // $serviceDeleteData = Service::find($id);  
+        // $serviceDeleteData->delete();  //another way
+
+        // $imgDeleteData = Image::find($id);
+        // $imgDeleteData->delete();  //another way
+
+        // $imageDeleteWhData = Image::where('service_id', $id)->get();
+        // $imageDeleteWhData->delete();  //another way
+
+        
+    }
+
 
 
 

@@ -15,7 +15,6 @@ function getImage(e){
    form.image = e.target.files; // for multiple image upload
 }
 const submit = () => {
-    console.log(form)
     form.post(route('image.store') );
 };
 </script>
