@@ -99,10 +99,10 @@ class ImageController extends Controller
 
 
         $data = Image::find($id);
-        if(File::exists($data->image)){
-            File::delete($data->image);
+       
+        if(File::exists("storage/images/".$data->image)){
+            File::delete("storage/images/".$data->image);
         }
-        
         $data->delete();
 
 
